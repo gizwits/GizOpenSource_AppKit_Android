@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="mode">
+        <item>ESP</item>
+        <item>HF</item>
+        <item>MXCHIP</item>
+        <item>RTK</item>
+        <item>WM</item>
+        <item>QCT</item>
+        <item>TI</item>
+        <item>BL</item>
+        <item>FSK</item>
+    </string-array>
+
+</resources>

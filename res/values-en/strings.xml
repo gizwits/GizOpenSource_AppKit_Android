@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">GOpenSourceAppKit</string>
+
+    <!-- 用户模块 -->
+
+
+    <!-- UserLoginActivity -->
+    <string name="name_hint">Please Enter phone number</string>
+    <string name="password_hint">Please Enter password</string>
+    <string name="name_digits">0123456789</string>
+    <string name="psw_digits">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVWXYZ</string>
+    <string name="forget_password">Forgot password?</string>
+    <string name="login">Login</string>
+    <string name="register">Sign up</string>
+    <string name="toast_name_empet">Username can not be empty</string>
+    <string name="toast_name_wrong">the phone number is incorrect</string>
+    <string name="toast_psw_empet">Password cannot be empty</string>
+    <string name="toast_login_successful">Login successful</string>
+    <string name="toast_login_failed">Login failed</string>
+    <string name="loadingtext">Processing, please wait ...</string>
+    <string name="pass">Skip</string>
+    <string name="QQ">QQ</string>
+    <string name="double_click">Press again to exit the program</string>
+
+    <!-- RegisterActivity -->
+    <string name="phone_hint">phone number</string>
+    <string name="getcode">Get verification code</string>
+    <string name="getcode_again">To obtain the verification code</string>
+    <string name="timer_message">seconds later to get</string>
+    <string name="code_hint">please enter verification code</string>
+    <string name="send_successful">Phone verification code sent successfully</string>
+    <string name="send_failed">Phone verification code sent failed</string>
+    <string name="toast_code_empet">Verification code cannot be empty</string>
+    <string name="toast_psw_wrong">The password must be at least six characters</string>
+    <string name="no_getcode">Verification code error</string>
+    <string name="btn_register">Sign up now</string>
+    <string name="register_successful">Registered successfully</string>
+    <string name="register_failed">Registered Failed</string>
+
+    <!-- ForgetPasswordActivity -->
+    <string name="reset">Reset password</string>
+    <string name="reset_successful">Reset successful</string>
+    <string name="reset_failed">Reset failed</string>
+
+    <!-- 配置模块 -->
+
+
+    <!-- ReadyDeviceActivity -->
+    <string name="add_device">Add Device</string>
+    <string name="like_img">Verify that the device is in standby status</string>
+    <string name="noredlight">Not red?</string>
+    <string name="finished">Steps have been completed</string>
+    <string name="join_by_hands">Manually connected devices</string>
+    <string name="next">Next</string>
+
+    <!-- ResetDeviceActivity -->
+    <string name="reset_device">Reset Device</string>
+    <string name="resetmessage">click [KEY2], [RGB LED] lights red</string>
+
+    <!-- ChooseDeviceActivity -->
+    <string name="choosedevice">Select device</string>
+    <string name="nodevice">Without my device?</string>
+    <string name="network_error">Please switch to Wifi environment</string>
+    <string name="itemtext_start">Discover Devices</string>
+    <string name="itemtext_end">,Quick Configuration</string>
+    <string name="ssid_start">XPG-GAgent</string>
+
+    <!-- CheckDeviceWorkWifi -->
+    <string name="check_psw_title">Check the password</string>
+    <string name="check_psw">Check Wifi password</string>
+    <string name="configuration_title">Please enter the Wifi password</string>
+    <string name="softPsw_hint">Please enter the Wifi password</string>
+    <string name="workwifi_isnull">Password is empty?</string>
+    <string name="choose_wifi_list_title">Please select an available Wi-Fi</string>
+    <string name="softssid_error">softap failure, please return</string>
+
+    <!-- ConfigCountDownActivity -->
+    <string name="configcountDown_title">Device connected to the network</string>
+    <string name="configuration_successful">Configuration success</string>
+    <string name="configuration_failed">Configuration Failed</string>
+    <string name="prompt">Tip</string>
+    <string name="cancel_besure">Discard your configuration?</string>
+    <string name="cancel">Cancel</string>
+    <string name="besure">OK</string>
+    <string name="device_connect">The phone is configured devices to connect to the Internet...</string>
+    <string name="timer_text">After the device connected to the network, the phone can be remotely controlled device</string>
+    <string name="softap_loading">Connecting softap, please wait ...</string>
+
+    <!-- FailedConfigActivity -->
+    <string name="please_check">device connected to the network is unsuccessful, check the following:</string>
+    <string name="join_failed_title">The connection is failed</string>
+    <string name="check_first">1、Incorrect wifi password?</string>
+    <string name="check_second">2、Wifi can connect to the Internet?</string>
+    <string name="check_third">3、Mobile phones, devices and routers from farther than</string>
+    <string name="check_fourth">4、The router limits</string>
+    <string name="config_again">Retry</string>
+
+    <!-- 设备列表 -->
+
+
+    <!-- DeviceListActivity -->
+    <string name="devicelist_title">Device List</string>
+    <string name="offline_devices">Offline device</string>
+    <string name="found_devices">Discovery of new devices</string>
+    <string name="havenot_device">No device</string>
+    <string name="no_lan">Remote</string>
+    <string name="lan">Lan</string>
+    <string name="unbind">Unbound</string>
+    <string name="found_many_devices">Discover multiple devices，Click to select Configure Device</string>
+    <string name="no_devices">No devices ,please add</string>
+    <string name="bound_divices">Bound device</string>
+    <string name="remove_bound">Unbinding</string>
+    <string name="unbound_failed">Unbundling fail</string>
+    <string name="setsubscribe_failed">Subscribe to fail</string>
+    <string name="cancel_logout">Logout?</string>
+    <string name="no">Cancel</string>
+    <string name="doubleclick_logout">Click again to log off</string>
+    <string name="doubleclick_back">Click again to return</string>
+
+    <!-- AboutActivity -->
+    <string name="appversion">Program Version:</string>
+    <string name="SDKversion">SDK version:</string>
+    <string name="about">About</string>
+
+    <!-- 菜单 -->
+
+    <string name="QR_code">Scan QR code</string>
+    <string name="site">Setting</string>
+    <string name="change_user">Logout</string>
+
+    <!-- 扫描二维码 -->
+    <string name="add_successful">Add successful</string>
+    <string name="add_failed">Add failure，Please go back and try again</string>
+    <string name="qr_code_tips">Put qr code in a camera, automatic scanning immediately</string>
+    <string name="scanning_successful">Scan code successfully</string>
+
+    <!-- MessageHandler -->
+    <string name="not_ticker">Gizwits:You have new device online, please check!</string>
+    <string name="not_title">New device</string>
+    <string name="not_text">,Click to configure this device!</string>
+    <string name="notify">Remind</string>
+
+    <!-- 设备控制 -->
+
+    <string name="MAC">MAC:</string>
+
+    <!-- AitlinkChooseDeviceWorkWifiActivity -->
+    <string name="choose_mode_title">Module type selection</string>
+    <string name="choose_mode_start">Select the type of module:</string>
+    <string name="configuration_message">Please enter the Wifi password, Configure the device connected to the network</string>
+    <string name="five_wifi">Note: does not support 5G channel Wifi network</string>
+
+    <!-- AirlinkReadyActivity -->
+    <string name="airlink_ready_title">Standby status</string>
+    <string name="airlink_ready_message">press [KEY2] until [RGB LED] lights green</string>
+
+    <!-- AirlinkConfigCountdown -->
+    <string name="search_jion">Search for and connect the device</string>
+    <string name="searching_device">Searching for devices</string>
+    <string name="searched_device">Searched to device</string>
+    <string name="trying_jion_device">Trying to connect with the device</string>
+	
+    
+    
+</resources>
