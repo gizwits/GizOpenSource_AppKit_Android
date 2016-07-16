@@ -5,13 +5,13 @@ import java.util.List;
 public class GosConstant {
 
 	// 在机智云开发者账号下申请的App_ID
-	public static final String App_ID = "your_gizwits_app_id";
+	public static final String App_ID = "your_app_id";
 
 	// 在机智云开发者账号下申请的App_Screct(必须与上述App_ID对应)
-	public static final String App_Screct = "your_gizwits_app_secret";
+	public static final String App_Screct = "your_app_secret";
 
 	// 在机智云开发者账号下创建的产品ProductKey
-	public static final String device_ProductKey = "your_device_product_key";
+	public static final String device_ProductKey = "your_product_key";
 
 	// Gokit设备热点默认前缀
 	public static final String SoftAP_Start = "XPG-GAgent";
