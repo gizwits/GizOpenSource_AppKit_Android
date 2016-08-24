@@ -10,7 +10,7 @@
         android:id="@+id/action_addDevice"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/add_device"/>
+        android:title="@string/add_device_menu"/>
     <item
         android:id="@+id/action_site"
         android:orderInCategory="100"

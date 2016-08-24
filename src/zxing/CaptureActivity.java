@@ -17,7 +17,6 @@ package zxing;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
-
 import zxing.camera.CameraManager;
 import zxing.decoding.DecodeThread;
 import zxing.utils.CaptureActivityHandler;
@@ -25,15 +24,12 @@ import zxing.utils.InactivityTimer;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -46,11 +42,8 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
-
-import com.gizwits.openSource.appkit.R;
-import com.gizwits.gizwifisdk.api.GizWifiSDK;
-import com.gizwits.gizwifisdk.listener.GizWifiSDKListener;
+import com.gizwits.opensource.appkit.DeviceModule.GosDeviceListActivity;
+import com.gizwits.opensource.appkit.R;
 import com.google.zxing.Result;
 
 /**
@@ -74,40 +67,10 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 	private RelativeLayout scanContainer;
 	private RelativeLayout scanCropView;
 	private ImageView scanLine;
-
-	@SuppressWarnings("unused")
-	private String product_key, passcode, did;
 	private Button btnCancel;
 	private ImageView ivReturn;
-	private String uid, token, mac, productKey, productSecret;
-
-	protected SharedPreferences spf;
-
-	private GizWifiSDKListener gizWifiSDKListener = new GizWifiSDKListener() {
-
-		/** 用于设备绑定 */
-		public void didBindDevice(int error, String errorMessage, String did) {
-			CaptureActivity.this.didBindDevice(error, errorMessage, did);
-		};
-
-	};
-
-	/**
-	 * 设备绑定回调
-	 * 
-	 * @param result
-	 * @param did
-	 */
-	protected void didBindDevice(int error, String errorMessage, java.lang.String did) {
-		if (error == 0) {
-			mHandler.sendEmptyMessage(handler_key.SUCCESS.ordinal());
-		} else {
-			Message message = new Message();
-			message.what = handler_key.FAILED.ordinal();
-			message.obj = errorMessage;
-			mHandler.sendMessage(message);
-		}
-	}
+	// private String uid, token, mac, productKey, productSecret;
+	private String did, passcode, product_key;
 
 	/**
 	 * ClassName: Enum handler_key. <br/>
@@ -119,10 +82,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 	private enum handler_key {
 
 		START_BIND,
-
-		SUCCESS,
-
-		FAILED,
 
 	}
 
@@ -137,43 +96,17 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 			switch (key) {
 
 			case START_BIND:
-				if (!TextUtils.isEmpty(uid) && !TextUtils.isEmpty(token) && !TextUtils.isEmpty(mac)
-						&& !TextUtils.isEmpty(productKey) && !TextUtils.isEmpty(productSecret)) {
-					startBind(uid, token, mac, productKey, productSecret);
-				} else {
-					startBind(passcode, did);
+
+				String[] strings = (String[]) msg.obj;
+				for (String string : strings) {
+					GosDeviceListActivity.boundMessage.add(string);
 				}
-
-				break;
-
-			case SUCCESS:
-				// Toast.makeText(CaptureActivity.this, R.string.add_successful,
-				// Toast.LENGTH_SHORT).show();
-				// Intent intent = new Intent(CaptureActivity.this,
-				// DeviceListActivity.class);
-				// startActivity(intent);
 				finish();
 				break;
-			case FAILED:
-				Toast.makeText(CaptureActivity.this, R.string.add_failed, Toast.LENGTH_SHORT).show();
-				finish();
+
 			}
 		}
 	};
-
-	@SuppressWarnings("deprecation")
-	private void startBind(final String passcode, final String did) {
-
-		GizWifiSDK.sharedInstance().bindDevice(spf.getString("Uid", ""), spf.getString("Token", ""), did, passcode,
-				null);
-		// mCenter.cBindDevice(setmanager.getUid(), setmanager.getToken(), did,
-		// passcode, "");
-
-	}
-
-	private void startBind(String uid, String token, String mac, String productKey, String productSecret) {
-		GizWifiSDK.sharedInstance().bindRemoteDevice(uid, token, mac, productKey, productSecret);
-	}
 
 	private Rect mCropRect = null;
 
@@ -197,11 +130,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 		if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		}
-
-		// 每次返回activity都要注册一次sdk监听器，保证sdk状态能正确回调
-		GizWifiSDK.sharedInstance().setListener(gizWifiSDKListener);
-
-		spf = getSharedPreferences("set", Context.MODE_PRIVATE);
 
 		Window window = getWindow();
 		window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -238,8 +166,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 	public void onResume() {
 		super.onResume();
 
-		// 每次返回activity都要注册一次sdk监听器，保证sdk状态能正确回调
-		GizWifiSDK.sharedInstance().setListener(gizWifiSDKListener);
 		// CameraManager must be initialized here, not in onCreate(). This is
 		// necessary because we don't
 		// want to open the camera driver and measure the screen size if we're
@@ -318,28 +244,43 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 	 */
 	public void handleDecode(Result rawResult, Bundle bundle) {
 		String text = rawResult.getText();
+		Log.i("Apptest", text);
+		Message msg = new Message();
 		if (text.contains("product_key=") && text.contains("did=") && text.contains("passcode=")) {
 
 			inactivityTimer.onActivity();
 			product_key = getParamFomeUrl(text, "product_key");
 			did = getParamFomeUrl(text, "did");
 			passcode = getParamFomeUrl(text, "passcode");
+			String[] strings = { did, passcode };
+			msg.what = handler_key.START_BIND.ordinal();
+			msg.obj = strings;
+			mHandler.sendMessage(msg);
+		}
+		// else if (text.contains("uid") && text.contains("token") &&
+		// text.contains("productKey")
+		// && text.contains("productSecret")) {
+		// inactivityTimer.onActivity();
+		// uid = getParamFomeUrl(text, "uid");
+		// token = getParamFomeUrl(text, "token");
+		// mac = getParamFomeUrl(text, "mac");
+		// productKey = getParamFomeUrl(text, "productKey");
+		// productSecret = getParamFomeUrl(text, "productSecret");
+		// String[] strings = { uid, token, mac, productKey, productSecret };
+		// msg.what = handler_key.START_BIND.ordinal();
+		// msg.obj = strings;
+		//
+		// mHandler.sendMessage(msg);
+		// }
+		else {
+			// handler = new CaptureActivityHandler(this, cameraManager,
+			// DecodeThread.ALL_MODE);
+			String[] strings = { text };
+			msg.what = handler_key.START_BIND.ordinal();
+			msg.obj = strings;
+			mHandler.sendMessage(msg);
+		
 
-			Toast.makeText(CaptureActivity.this, R.string.scanning_successful, Toast.LENGTH_SHORT).show();
-			mHandler.sendEmptyMessage(handler_key.START_BIND.ordinal());
-
-		} else if (text.contains("uid") && text.contains("token") && text.contains("productKey")
-				&& text.contains("productSecret")) {
-			inactivityTimer.onActivity();
-			uid = getParamFomeUrl(text, "uid");
-			token = getParamFomeUrl(text, "token");
-			mac = getParamFomeUrl(text, "mac");
-			productKey = getParamFomeUrl(text, "productKey");
-			productSecret = getParamFomeUrl(text, "productSecret");
-			Toast.makeText(CaptureActivity.this, R.string.scanning_successful, Toast.LENGTH_SHORT).show();
-			mHandler.sendEmptyMessage(handler_key.START_BIND.ordinal());
-		} else {
-			handler = new CaptureActivityHandler(this, cameraManager, DecodeThread.ALL_MODE);
 		}
 	}
 
@@ -356,21 +297,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 		}
 		return product_key;
 	}
-
-	// @Override
-	// protected void didBindDevice(int error, String errorMessage, String did)
-	// {
-	// Log.d("扫描结果", "error=" + error + ";errorMessage=" + errorMessage +
-	// ";did=" + did);
-	// if (error == 0) {
-	// mHandler.sendEmptyMessage(handler_key.SUCCESS.ordinal());
-	// } else {
-	// Message message = new Message();
-	// message.what = handler_key.FAILED.ordinal();
-	// message.obj = errorMessage;
-	// mHandler.sendMessage(message);
-	// }
-	// }
 
 	private void initCamera(SurfaceHolder surfaceHolder) {
 		if (surfaceHolder == null) {
@@ -404,8 +330,10 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 		// camera error
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(getString(R.string.app_name));
-		builder.setMessage("相机打开出错，请稍后重试");
-		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+		String camera_error = getText(R.string.camera_error).toString();
+		builder.setMessage(camera_error);
+		String shure = getText(R.string.besure).toString();
+		builder.setPositiveButton(shure, new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {

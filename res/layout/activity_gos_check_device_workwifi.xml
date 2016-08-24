@@ -8,9 +8,9 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="15dp"
         android:layout_marginBottom="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="30dp"
         android:text="@string/check_psw" />
 
     <LinearLayout
@@ -44,15 +44,19 @@
 
         <ImageView
             android:id="@+id/imgWiFiList"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="13dp"
-            android:layout_marginRight="19dp"
-            android:layout_marginTop="10dp"
+            android:layout_width="32dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
             android:button="@null"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/right_icon" />
+            android:paddingBottom="5dp"
+            android:paddingLeft="3dp"
+            android:paddingRight="9dp"
+            android:paddingTop="5dp"
+            android:src="@drawable/button_more" />
     </LinearLayout>
 
     <LinearLayout
@@ -75,7 +79,7 @@
             style="@style/EditTextStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="7dp"
             android:layout_weight="1"
             android:background="@null"
             android:ems="10"
@@ -87,8 +91,8 @@
 
         <CheckBox
             android:id="@+id/cbLaws"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:layout_height="15dp"
             android:layout_marginBottom="15dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="15dp"
@@ -96,20 +100,12 @@
             android:button="@null" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/llNext"
-        style="@style/LinearlayoutStyle"
+    <Button
+        android:id="@+id/btnNext"
+        style="@style/ButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="60dp"
-        android:gravity="center" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/next"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="20sp" />
-    </LinearLayout>
+        android:text="@string/next" />
 
 </LinearLayout>

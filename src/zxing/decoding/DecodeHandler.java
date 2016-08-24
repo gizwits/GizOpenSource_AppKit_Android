@@ -27,7 +27,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
-import com.gizwits.openSource.appkit.R;
+import com.gizwits.opensource.appkit.R;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.MultiFormatReader;

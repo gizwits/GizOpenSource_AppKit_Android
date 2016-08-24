@@ -2,31 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_vertical"
     android:orientation="vertical" >
-
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:gravity="center_vertical" >
+        android:layout_height="300dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="80dp"
+        android:paddingRight="80dp"
+        android:paddingTop="80dp" >
 
-        <com.gizwits.openSource.view.RoundProgressBar
+        <com.gizwits.opensource.appkit.view.RoundProgressBar
             android:id="@+id/rpbConfig"
-            android:layout_width="120dip"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:layout_height="120dip"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="40dp" />
+            android:layout_marginLeft="16dp" />
     </RelativeLayout>
 
-    <TextView     
+    <TextView
         android:id="@+id/tvTimer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
         android:text="@string/search_join" />
-
 
 </LinearLayout>

@@ -18,20 +18,21 @@
             android:id="@+id/imageView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:src="@drawable/login_user" />
+            android:layout_marginLeft="21dp"
+            android:layout_marginRight="3dp"
+            android:src="@drawable/phone" />
 
         <EditText
             android:id="@+id/etName"
             style="@style/EditTextStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="19dp"
             android:layout_weight="1"
             android:background="@null"
             android:digits="@string/name_digits"
             android:ems="10"
-            android:hint="@string/phone_hint"
+            android:hint="@string/name_hint"
             android:inputType="phone"
             android:textColor="@color/black"
             android:textColorHint="@color/text_gray_light"
@@ -98,7 +99,7 @@
             android:id="@+id/imageView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="22dp"
+            android:layout_marginLeft="23dp"
             android:src="@drawable/login_password" />
 
         <EditText
@@ -106,7 +107,7 @@
             style="@style/EditTextStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="21dp"
             android:layout_weight="1"
             android:background="@null"
             android:digits="@string/psw_digits"
@@ -119,8 +120,8 @@
 
         <CheckBox
             android:id="@+id/cbLaws"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:layout_height="15dp"
             android:layout_margin="15dp"
             android:background="@drawable/checkbox_laws_selector"
             android:button="@null" />
