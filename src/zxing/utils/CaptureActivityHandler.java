@@ -25,7 +25,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-import com.gizwits.openSource.appkit.R;
+import com.gizwits.opensource.appkit.R;
 import com.google.zxing.Result;
 
 /**

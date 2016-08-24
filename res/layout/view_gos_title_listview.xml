@@ -36,16 +36,16 @@
             android:textColor="@color/black" />
     </LinearLayout>
 
-    <com.gizwits.openSource.view.SlideListView2
+    <com.gizwits.opensource.appkit.view.SlideListView2
         android:id="@+id/slideListView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tvListViewTitle"
         android:background="@color/white"
-        android:listSelector="@drawable/devicelist_item_selector"
+        android:divider="@color/line_gray"
         android:dividerHeight="0.5dp"
-        android:divider="@color/line_gray" >
-    </com.gizwits.openSource.view.SlideListView2>
+        android:listSelector="@drawable/devicelist_item_selector" >
+    </com.gizwits.opensource.appkit.view.SlideListView2>
 
 </RelativeLayout>

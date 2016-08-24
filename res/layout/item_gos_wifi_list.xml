@@ -26,7 +26,7 @@
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_marginRight="20dp"
-            android:src="@drawable/right_icon" />
+            android:src="@drawable/button_more" />
     </LinearLayout>
 
 </LinearLayout>

@@ -41,9 +41,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/llCenter"
-                android:gravity="center_horizontal"
                 android:background="@color/transparent_half"
-                android:paddingBottom="20dp"
+                android:gravity="center_horizontal"
+                android:paddingBottom="10dp"
                 android:paddingTop="50dp"
                 android:text="@string/qr_code_tips"
                 android:textColor="@android:color/white"
@@ -102,9 +102,22 @@
             android:id="@+id/iv_return"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:padding="10dp"
-            android:src="@drawable/return_icon" />
+            android:paddingLeft="15dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="15dp"
+            android:src="@drawable/button_back" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/ivBottom"
+            android:layout_centerHorizontal="true"
+            android:text="@string/scan"
+            android:textSize="14sp"
+            android:textColor="@color/yellow" />
+
     </RelativeLayout>
 
 </RelativeLayout>

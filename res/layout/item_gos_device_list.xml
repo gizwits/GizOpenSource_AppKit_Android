@@ -2,29 +2,33 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="top"
     android:paddingRight="-91dp" >
 
     <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_alignParentLeft="true" >
 
         <LinearLayout
+            android:id="@+id/llLeft"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/button_shape"
+            android:background="@drawable/img_bg_shape"
             android:gravity="center"
             android:orientation="vertical" >
 
             <ImageView
-                android:id="@+id/imageView1"
+                android:id="@+id/imgLeft"
                 android:layout_width="46dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/fourth" />
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/device_icon" />
         </LinearLayout>
 
         <LinearLayout
@@ -40,6 +44,8 @@
                 android:id="@+id/tvDeviceName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:text="TextView"
                 android:textColor="@color/black" />
 
@@ -55,9 +61,10 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:layout_marginRight="10dp" >
+            android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/tvDeviceStatus"
@@ -78,7 +85,7 @@
                 android:id="@+id/imgRight"
                 android:layout_width="wrap_content"
                 android:layout_height="15dp"
-                android:src="@drawable/right_icon" />
+                android:src="@drawable/button_more" />
         </LinearLayout>
 
         <RelativeLayout
