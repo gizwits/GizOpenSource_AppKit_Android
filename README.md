@@ -11,6 +11,8 @@
 
     使用QQ、微信登录或百度或极光推送功能之前，需要您先到相应网站申请对应的应用信息，在配置文件中作相应的替换。
 
+    配置文件位置：assets/UIConfig.json
+
 
 # GizWifiSDK 版本号
 
@@ -110,7 +112,7 @@
 
 ## 5. 配置文件说明
 
-    配置文件位置：GOpenSourceModules/CommonModule/UIConfig.json
+    配置文件位置：assets/UIConfig.json
 
     配置文件可对程序样式及机智云appid等进行配置。
 
