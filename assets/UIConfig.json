@@ -17,7 +17,7 @@
     "navigationBarTextColor":"000000",
     "configProgressViewColor":"000000",
     "addDeviceTitle":"",
-    "qq": true,
-    "wechat": true,
+    "qq": false,
+    "wechat": false,
     "anonymousLogin": true
 }
