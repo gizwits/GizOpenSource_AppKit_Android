@@ -14,7 +14,7 @@
 
 # GizWifiSDK 版本号
 
-    2.02.02
+    2.04.04
 
 # 功能介绍
 
@@ -110,7 +110,7 @@
 
 ## 5. 配置文件说明
 
-    配置文件位置：GOpenSourceModules/CommonModule/UIConfig.json
+    配置文件位置：assets/UIConfig.json
 
     配置文件可对程序样式及机智云appid等进行配置。
 
@@ -134,7 +134,12 @@
 	navigationBarTextColor：导航栏文字颜色
 	configProgressViewColor：配置中界面 progress view 颜色
 	addDeviceTitle：添加设备界面 导航栏标题文字
-
+    
+              需要注意:
+              1.极光推送的appid需要在AndroidManifest.xml 中填写见243行。
+              2.微信登录需要进行在腾讯api中设置自己的md5值否者无法正常运行
+              3.QQ的appkey需要在AndroidManifest.xml中89行填写
+    
     具体细节可以参考【开源框架工程使用文档】：http://docs.gizwits.com/hc/kb/article/186638/
 
 # GoKit硬件依赖
