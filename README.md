@@ -1,6 +1,8 @@
 # 机智云开源框架App工程
 ==================
 
+    此为Eclipse工程。Android Studio工程请去这里下载：https://github.com/gizwits/GOpenSource_AppKit_Android_AS
+
     使用机智云开源APP之前，需要先在机智云开发平台创建您自己的产品和应用。
 
     开源App需要使用您申请的AppId、AppSecret以及您自己的产品ProductKey才能正常运行。
