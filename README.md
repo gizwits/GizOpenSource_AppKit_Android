@@ -11,12 +11,10 @@
 
     使用QQ、微信登录或百度或极光推送功能之前，需要您先到相应网站申请对应的应用信息，在配置文件中作相应的替换。
 
-    配置文件位置：assets/UIConfig.json
-
 
 # GizWifiSDK 版本号
 
-    2.03.03
+    2.04.04
 
 # 功能介绍
 
@@ -136,7 +134,12 @@
 	navigationBarTextColor：导航栏文字颜色
 	configProgressViewColor：配置中界面 progress view 颜色
 	addDeviceTitle：添加设备界面 导航栏标题文字
-
+    
+              需要注意:
+              1.极光推送的appid需要在AndroidManifest.xml 中填写见243行。
+              2.微信登录需要进行在腾讯api中设置自己的md5值否者无法正常运行
+              3.QQ的appkey需要在AndroidManifest.xml中89行填写
+    
     具体细节可以参考【开源框架工程使用文档】：http://docs.gizwits.com/hc/kb/article/186638/
 
 # GoKit硬件依赖

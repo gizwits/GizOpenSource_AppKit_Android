@@ -3,15 +3,6 @@ package com.gizwits.opensource.appkit.ConfigModule;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.gizwits.gizwifisdk.api.GizWifiSDK;
-import com.gizwits.gizwifisdk.enumration.GizWifiConfigureMode;
-import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
-import com.gizwits.opensource.appkit.CommonModule.WifiAutoConnectManager;
-import com.gizwits.opensource.appkit.CommonModule.WifiAutoConnectManager.WifiCipherType;
-import com.gizwits.opensource.appkit.utils.NetUtils;
-import com.gizwits.opensource.appkit.view.RoundProgressBar;
-import com.gizwits.opensource.appkit.R;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -22,8 +13,20 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.WindowManager;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.gizwits.gizwifisdk.api.GizWifiSDK;
+import com.gizwits.gizwifisdk.enumration.GizWifiConfigureMode;
+import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
+import com.gizwits.opensource.appkit.R;
+import com.gizwits.opensource.appkit.CommonModule.WifiAutoConnectManager;
+import com.gizwits.opensource.appkit.CommonModule.WifiAutoConnectManager.WifiCipherType;
+import com.gizwits.opensource.appkit.utils.NetUtils;
+import com.gizwits.opensource.appkit.view.RoundProgressBar;
 
 @SuppressLint("HandlerLeak")
 public class GosConfigCountdownActivity extends GosConfigModuleBaseActivity {
@@ -84,6 +87,13 @@ public class GosConfigCountdownActivity extends GosConfigModuleBaseActivity {
 	}
 
 	private void initView() {
+		WindowManager wm = this.getWindowManager();
+		int width = wm.getDefaultDisplay().getWidth();
+		RelativeLayout cel_layout = (RelativeLayout) findViewById(R.id.layoutparms);
+		LayoutParams params = cel_layout.getLayoutParams();
+		params.height = width;
+		params.width = width;
+		cel_layout.setLayoutParams(params);
 		tvTimer = (TextView) findViewById(R.id.tvTimer);
 		rpbConfig = (RoundProgressBar) findViewById(R.id.rpbConfig);
 
@@ -94,7 +104,7 @@ public class GosConfigCountdownActivity extends GosConfigModuleBaseActivity {
 
 	private void initData() {
 		softSSID = getIntent().getStringExtra("softSSID");
-		broadcase = new GosWifiChangeReciver();
+		
 	}
 
 	private enum handler_key {
@@ -194,8 +204,8 @@ public class GosConfigCountdownActivity extends GosConfigModuleBaseActivity {
 
 		// 切换至设备热点
 		WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-		WifiAutoConnectManager manager = new WifiAutoConnectManager(wifiManager);
 		WifiCipherType cipherType = WifiAutoConnectManager.getCipherType(GosConfigCountdownActivity.this, softSSID);
+		WifiAutoConnectManager manager = new WifiAutoConnectManager(wifiManager);
 		manager.connect(softSSID, SoftAP_PSW, cipherType);
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION);
@@ -205,7 +215,7 @@ public class GosConfigCountdownActivity extends GosConfigModuleBaseActivity {
 		final Timer mtimer = new Timer();
 		mtimer.schedule(new TimerTask() {
 
-			@Override
+			@Override	
 			public void run() {
 				if (progressDialog.isShowing()) {
 					progressDialog.cancel();
@@ -231,7 +241,11 @@ public class GosConfigCountdownActivity extends GosConfigModuleBaseActivity {
 					isChecked = false;
 					handler.sendEmptyMessage(handler_key.START_TIMER.ordinal());
 				}
-				registerReceiver(broadcase, filter);
+				if(broadcase==null){
+					broadcase = new GosWifiChangeReciver();
+					registerReceiver(broadcase, filter);
+				}
+				
 			}
 		}
 	}
@@ -253,7 +267,6 @@ public class GosConfigCountdownActivity extends GosConfigModuleBaseActivity {
 			return;
 		}
 		if (timer != null) {
-
 			timer.cancel();
 		}
 		Message message = new Message();
@@ -269,9 +282,13 @@ public class GosConfigCountdownActivity extends GosConfigModuleBaseActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-
 		isChecked = false;
-		unregisterReceiver(broadcase);
+		
+		if(broadcase!=null){
+			unregisterReceiver(broadcase);
+			broadcase = null;
+		}
+		
 
 	}
 }

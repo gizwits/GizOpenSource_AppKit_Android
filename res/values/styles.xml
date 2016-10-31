@@ -26,7 +26,7 @@
     </style>
 
     <style name="My_Start" parent="AppBaseTheme">
-        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:windowBackground">@drawable/background</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 

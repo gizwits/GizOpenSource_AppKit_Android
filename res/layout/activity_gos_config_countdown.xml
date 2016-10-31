@@ -5,6 +5,7 @@
     android:orientation="vertical" >
 
     <RelativeLayout
+        android:id="@+id/layoutparms"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:gravity="center_vertical"
@@ -23,7 +24,6 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
         android:text="@string/device_connect" />
 
