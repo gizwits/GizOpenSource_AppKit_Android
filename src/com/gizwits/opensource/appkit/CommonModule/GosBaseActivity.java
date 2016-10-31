@@ -2,8 +2,7 @@ package com.gizwits.opensource.appkit.CommonModule;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
-import com.gizwits.opensource.appkit.R;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,11 +19,15 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
+import com.gizwits.opensource.appkit.MessageCenter;
+import com.gizwits.opensource.appkit.R;
 
 public class GosBaseActivity extends Activity {
 
@@ -70,7 +73,7 @@ public class GosBaseActivity extends Activity {
 		}
 
 		spf = getSharedPreferences(SPF_Name, Context.MODE_PRIVATE);
-
+		MessageCenter.getInstance(getApplicationContext());
 		// 初始化
 		setProgressDialog();
 	}

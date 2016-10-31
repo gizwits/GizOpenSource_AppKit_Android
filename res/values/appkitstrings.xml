@@ -26,7 +26,7 @@
     <string name="QQ">QQ登录</string>
     <string name="Wechat">微信登录</string>
     <string name="double_click">再按一次退出程序</string>
-
+	<string name="push_type_string">推送功能仅限于企业开发者使用，目前版本暂不支持推送</string>
     <!-- RegisterActivity -->
     <string name="getcode">获取验证码</string>
     <string name="getcode_again">重新获取验证码</string>
@@ -46,12 +46,13 @@
     <string name="reset">重置密码</string>
     <string name="reset_successful">重置成功</string>
     <string name="reset_failed">重置失败</string>
-
+    <string name="forget_pass">忘记密码?</string>
     <!-- 配置模块 -->
 
 
     <!-- ReadyDeviceActivity -->
     <string name="add_device">添加</string>
+    <string name="addDeviceTitle">设备</string>
     <string name="add_device_menu">添加设备</string>
     <string name="like_img">接通电源，确认设备处于待连接状态，如上图亮红灯</string>
     <string name="noredlight">不是亮红灯？</string>
@@ -81,7 +82,7 @@
     <string name="softssid_error">设备热点故障，请返回</string>
 
     <!-- ConfigCountDownActivity -->
-    <string name="configcountDown_title">设备连接网络</string>
+    <string name="configcountDown_title">搜索并连接设备</string>
     <string name="configuration_successful">配置成功</string>
     <string name="configuration_failed">配置失败</string>
     <string name="prompt">提示</string>
@@ -89,16 +90,16 @@
     <string name="cancel">取消</string>
     <string name="besure">确定</string>
     <string name="device_connect">手机已连接设备，正在配置设备连接网络...</string>
-    <string name="timer_text">设备连接网络后，手机可以远程控制设备</string>
+    <string name="timer_text">设备连接网络后，手机可以远程控制...</string>
     <string name="softap_loading">正在连接设备热点，请稍等...</string>
 
     <!-- FailedConfigActivity -->
     <string name="please_check">设备连接网络不成功，请检查：</string>
     <string name="join_failed_title">连接不成功</string>
-    <string name="check_first">1、wifi密码是否正确：</string>
-    <string name="check_second">2、网络是否能正常上网：</string>
-    <string name="check_third">3、手机、设备与路由器是否离得比较远：</string>
-    <string name="check_fourth">4、路由器是否设置了限制：</string>
+    <string name="check_first">1、wifi密码是否正确;</string>
+    <string name="check_second">2、网络是否能正常上网;</string>
+    <string name="check_third">3、手机、设备与路由器是否离得比较远;</string>
+    <string name="check_fourth">4、路由器是否设置了限制.</string>
     <string name="config_again">重试</string>
 
     <!-- 设备列表 -->
@@ -120,7 +121,7 @@
     <string name="bound_successful">绑定成功</string>
     <string name="bound_failed">绑定失败</string>
     <string name="setsubscribe_failed">订阅失败</string>
-    <string name="cancel_logout">确定要退出账号？</string>
+    <string name="cancel_logout">确定要注销吗？</string>
     <string name="no">不了</string>
     <string name="doubleclick_logout">再次点击您将注销登录</string>
     <string name="doubleclick_back">再次点击可返回</string>
@@ -144,7 +145,7 @@
     <!-- 扫描二维码 -->
     <string name="add_successful">添加成功</string>
     <string name="add_failed">添加失败，请返回重试</string>
-    <string name="qr_code_tips">将二维码放入框内，即刻自动扫描</string>
+    <string name="qr_code_tips">将二维码放入框内，即可自动扫描</string>
     <string name="scanning_successful">扫码成功</string>
 
     <!-- MessageHandler -->
@@ -169,7 +170,7 @@
 
     <!-- AirlinkConfigCountdown -->
     <string name="search_join">搜索并连接设备</string>
-    <string name="searching_device">正在搜索设备</string>
+    <string name="searching_device">正在搜索设备...</string>
     <string name="searched_device">已搜索到设备</string>
     <string name="trying_join_device">正在尝试与设备连接...</string>
 
@@ -182,7 +183,7 @@
 
     <!-- Error Toast -->
     <string name="GIZ_SDK_PARAM_FORM_INVALID">SDK内部通讯数据格式无效</string>
-    <string name="GIZ_SDK_CLIENT_NOT_AUTHEN">SDK未启动</string>
+    <string name="GIZ_SDK_CLIENT_NOT_AUTHEN">SDK正在启动</string>
     <string name="GIZ_SDK_CLIENT_VERSION_INVALID">无效的SDK版本号</string>
     <string name="GIZ_SDK_UDP_PORT_BIND_FAILED">UDP端口绑定失败</string>
     <string name="GIZ_SDK_DAEMON_EXCEPTION">SDK后台服务发生异常</string>
