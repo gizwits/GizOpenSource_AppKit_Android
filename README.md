@@ -134,6 +134,9 @@
 	navigationBarTextColor：导航栏文字颜色
 	configProgressViewColor：配置中界面 progress view 颜色
 	addDeviceTitle：添加设备界面 导航栏标题文字
+	qq：是否打开QQ登录【true：打开】
+    wechat：是否打开微信登录【true：打开】
+    anonymousLogin：是否打开匿名登录【true：打开】
     
               需要注意:
               1.极光推送的appid需要在AndroidManifest.xml 中填写见243行。
