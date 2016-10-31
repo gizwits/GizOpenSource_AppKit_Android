@@ -125,9 +125,9 @@
 	wechat_app_secret：微信登录 app secret
 	push_type：推送类型 【0：关闭，1：极光，2：百度】
 	bpush_app_key：百度推送 app key
-	openAPI_URL：openAPI 域名及端口，格式：“api.gizwits.com:80”，不写端口默认80
-	site_URL：site 域名及端口，格式：“site.gizwits.com:80”，不写端口默认80
-	push_URL：推送绑定服务器 域名及端口，格式：“push.gizwits.com:80”，不写端口默认80
+	openAPIDomain：openAPI 域名及端口，格式：api.gizwits.com”。要指定端口，格式为：”xxx.xxxxxxx.com:81&8443”
+	siteDomain：site 域名及端口，格式：“site.gizwits.com”。要指定端口，格式为：”xxx.xxxxxxx.com:81&8443”
+	pushDomain：推送绑定服务器 域名及端口，格式：“push.gizwits.com”。要指定端口，格式为：”xxx.xxxxxxx.com:81&8443”
 	buttonColor：按钮颜色
 	buttonTextColor：按钮文字颜色
 	navigationBarColor：导航栏颜色
@@ -138,7 +138,7 @@
               需要注意:
               1.极光推送的appid需要在AndroidManifest.xml 中填写见243行。
               2.微信登录需要进行在腾讯api中设置自己的md5值否者无法正常运行
-              3.QQ的appkey需要在AndroidManifest.xml中89行填写
+              3.tencent_app_id需要在AndroidManifest.xml中89行填写
     
     具体细节可以参考【开源框架工程使用文档】：http://docs.gizwits.com/hc/kb/article/186638/
 
