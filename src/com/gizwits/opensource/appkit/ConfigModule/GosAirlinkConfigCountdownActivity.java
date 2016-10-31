@@ -5,13 +5,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.gizwits.gizwifisdk.api.GizWifiSDK;
-import com.gizwits.gizwifisdk.enumration.GizWifiConfigureMode;
-import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
-import com.gizwits.gizwifisdk.enumration.GizWifiGAgentType;
-import com.gizwits.opensource.appkit.view.RoundProgressBar;
-import com.gizwits.opensource.appkit.R;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,11 +12,22 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gizwits.gizwifisdk.api.GizWifiSDK;
+import com.gizwits.gizwifisdk.enumration.GizWifiConfigureMode;
+import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
+import com.gizwits.gizwifisdk.enumration.GizWifiGAgentType;
+import com.gizwits.opensource.appkit.R;
+import com.gizwits.opensource.appkit.view.RoundProgressBar;
+
 @SuppressLint("HandlerLeak")
-public class GosAirlinkConfigCountdownActivity extends GosConfigModuleBaseActivity {
+public class GosAirlinkConfigCountdownActivity extends
+		GosConfigModuleBaseActivity {
 
 	/** The tv Time */
 	private TextView tvTimer;
@@ -52,14 +56,23 @@ public class GosAirlinkConfigCountdownActivity extends GosConfigModuleBaseActivi
 		// 设置ActionBar
 		setActionBar(false, false, R.string.configcountDown_title);
 
-		initData();
 		initView();
+		initData();
 		startAirlink();
 
 	}
 
 	private void initView() {
+		WindowManager wm = this.getWindowManager();
+		int width = wm.getDefaultDisplay().getWidth();
+
+		RelativeLayout cel_layout = (RelativeLayout) findViewById(R.id.params);
+		LayoutParams params = cel_layout.getLayoutParams();
+		params.height = width;
+		params.width = width;
+		cel_layout.setLayoutParams(params);
 		tvTimer = (TextView) findViewById(R.id.tvTimer);
+
 		rpbConfig = (RoundProgressBar) findViewById(R.id.rpbConfig);
 
 	}
@@ -68,25 +81,28 @@ public class GosAirlinkConfigCountdownActivity extends GosConfigModuleBaseActivi
 		workSSID = spf.getString("workSSID", "");
 		workSSIDPsw = spf.getString("workSSIDPsw", "");
 		modeDataList = new ArrayList<GizWifiGAgentType>();
+		modeDataList.add(GizWifiGAgentType.GizGAgentESP);
 		modeDataList.add(GizWifiGAgentType.GizGAgentMXCHIP);
 		modeDataList.add(GizWifiGAgentType.GizGAgentHF);
 		modeDataList.add(GizWifiGAgentType.GizGAgentRTK);
 		modeDataList.add(GizWifiGAgentType.GizGAgentWM);
-		modeDataList.add(GizWifiGAgentType.GizGAgentESP);
 		modeDataList.add(GizWifiGAgentType.GizGAgentQCA);
 		modeDataList.add(GizWifiGAgentType.GizGAgentTI);
 		modeDataList.add(GizWifiGAgentType.GizGAgentFSK);
 		modeDataList.add(GizWifiGAgentType.GizGAgentMXCHIP3);
 		modeDataList.add(GizWifiGAgentType.GizGAgentBL);
+		modeDataList.add(GizWifiGAgentType.GizGAgentAtmelEE);
+		modeDataList.add(GizWifiGAgentType.GizGAgentOther);
 		modeList = new ArrayList<GizWifiGAgentType>();
-		
-		modeList.add(modeDataList.get(GosAirlinkChooseDeviceWorkWiFiActivity.modeNum));
+
+		modeList.add(modeDataList
+				.get(GosAirlinkChooseDeviceWorkWiFiActivity.modeNum));
 
 	}
 
 	private void startAirlink() {
-		GizWifiSDK.sharedInstance().setDeviceOnboarding(workSSID, workSSIDPsw, GizWifiConfigureMode.GizWifiAirLink,
-				null, 60, modeList);
+		GizWifiSDK.sharedInstance().setDeviceOnboarding(workSSID, workSSIDPsw,
+				GizWifiConfigureMode.GizWifiAirLink, null, 60, modeList);
 		handler.sendEmptyMessage(handler_key.START_TIMER.ordinal());
 
 	}
@@ -133,15 +149,17 @@ public class GosAirlinkConfigCountdownActivity extends GosConfigModuleBaseActivi
 				break;
 
 			case SUCCESSFUL:
-				Toast.makeText(GosAirlinkConfigCountdownActivity.this, R.string.configuration_successful,
-						toastTime).show();
+				Toast.makeText(GosAirlinkConfigCountdownActivity.this,
+						R.string.configuration_successful, toastTime).show();
 				finish();
 				break;
 
 			case FAILED:
-				Toast.makeText(GosAirlinkConfigCountdownActivity.this, msg.obj.toString(),
-						toastTime).show();
-				Intent intent = new Intent(GosAirlinkConfigCountdownActivity.this, GosDeviceReadyActivity.class);
+				Toast.makeText(GosAirlinkConfigCountdownActivity.this,
+						msg.obj.toString(), toastTime).show();
+				Intent intent = new Intent(
+						GosAirlinkConfigCountdownActivity.this,
+						GosDeviceReadyActivity.class);
 				startActivity(intent);
 				finish();
 				break;
@@ -200,7 +218,8 @@ public class GosAirlinkConfigCountdownActivity extends GosConfigModuleBaseActivi
 	 * @param productKey
 	 *            PK
 	 */
-	protected void didSetDeviceOnboarding(GizWifiErrorCode result, String mac, String did, String productKey) {
+	protected void didSetDeviceOnboarding(GizWifiErrorCode result, String mac,
+			String did, String productKey) {
 		if (GizWifiErrorCode.GIZ_SDK_DEVICE_CONFIG_IS_RUNNING == result) {
 			return;
 		}

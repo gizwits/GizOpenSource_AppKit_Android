@@ -2,6 +2,10 @@ package com.gizwits.opensource.appkit.ConfigModule;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.gizwits.opensource.appkit.CommonModule.GosDeploy;
 import com.gizwits.opensource.appkit.ConfigModule.GosModeListActivity.ModeListAdapter;
 import com.gizwits.opensource.appkit.utils.NetUtils;
@@ -36,7 +40,8 @@ import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
 @SuppressLint("InflateParams")
-public class GosAirlinkChooseDeviceWorkWiFiActivity extends GosConfigModuleBaseActivity implements OnClickListener {
+public class GosAirlinkChooseDeviceWorkWiFiActivity extends
+		GosConfigModuleBaseActivity implements OnClickListener {
 
 	private AlertDialog create;
 	private ArrayList<ScanResult> wifiList;
@@ -75,14 +80,15 @@ public class GosAirlinkChooseDeviceWorkWiFiActivity extends GosConfigModuleBaseA
 	ModeListAdapter modeListAdapter;
 
 	/** The modeNum */
-	static int modeNum = 4;
+	static int modeNum = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_gos_airlink_choose_device_workwifi);
 		// 设置ActionBar
-		String title = getString(R.string.add_device) + GosDeploy.setAddDeviceTitle();
+		String title = getString(R.string.add_device)
+				+ GosDeploy.setAddDeviceTitle();
 		setActionBar(true, true, title);
 
 		initData();
@@ -94,17 +100,39 @@ public class GosAirlinkChooseDeviceWorkWiFiActivity extends GosConfigModuleBaseA
 	protected void onResume() {
 		super.onResume();
 
-		tvMode.setText(modeList.get(modeNum));
-		// 预设workSSID && workSSIDPsw
-		if (!TextUtils.isEmpty(workSSID)) {
-			etSSID.setText(workSSID);
-			if (checkworkSSIDUsed(workSSID)) {
-				if (!TextUtils.isEmpty(spf.getString("workSSIDPsw", ""))) {
-					etPsw.setText(spf.getString("workSSIDPsw", ""));
+		try {
+			tvMode.setText(modeList.get(modeNum));
+			// 预设workSSID && workSSIDPsw
+			workSSID = NetUtils.getCurentWifiSSID(this);
+			String mypass = spf.getString("mypass", "");
+
+			if (!TextUtils.isEmpty(workSSID)) {
+				etSSID.setText(workSSID);
+				if(!TextUtils.isEmpty(mypass)){
+					JSONObject obj = new JSONObject(mypass);
+
+					if (obj.has(workSSID)) {
+						String pass = obj.getString(workSSID);
+						etPsw.setText(pass);
+					}else{
+						etPsw.setText("");
+					}
 				}
+				
+			} else {
+				etSSID.setText(NetUtils.getCurentWifiSSID(this));
 			}
-		} else {
-			etSSID.setText(NetUtils.getCurentWifiSSID(this));
+
+			// 当没有任何文字的时候设置为明文显示
+			if (TextUtils.isEmpty(etPsw.getText().toString())) {
+				cbLaws.setChecked(true);
+				etPsw.setInputType(0x90);
+			} else {
+				etPsw.setInputType(0x81);
+				cbLaws.setChecked(false);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -130,7 +158,8 @@ public class GosAirlinkChooseDeviceWorkWiFiActivity extends GosConfigModuleBaseA
 
 		cbLaws.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+			public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked) {
 				String psw = etPsw.getText().toString();
 
 				if (isChecked) {
@@ -144,7 +173,7 @@ public class GosAirlinkChooseDeviceWorkWiFiActivity extends GosConfigModuleBaseA
 	}
 
 	private void initData() {
-		workSSID = spf.getString("workSSID", "");
+		// workSSID = spf.getString("workSSID", "");
 
 		modeList = new ArrayList<String>();
 		String[] modes = this.getResources().getStringArray(R.array.mode);
@@ -161,12 +190,13 @@ public class GosAirlinkChooseDeviceWorkWiFiActivity extends GosConfigModuleBaseA
 			workSSIDPsw = etPsw.getText().toString();
 
 			if (TextUtils.isEmpty(workSSID)) {
-				Toast.makeText(GosAirlinkChooseDeviceWorkWiFiActivity.this, R.string.choose_wifi_list_title,
-						toastTime).show();
+				Toast.makeText(GosAirlinkChooseDeviceWorkWiFiActivity.this,
+						R.string.choose_wifi_list_title, toastTime).show();
 				return;
 			}
 			if (TextUtils.isEmpty(workSSIDPsw)) {
-				final Dialog dialog = new AlertDialog.Builder(this).setView(new EditText(this)).create();
+				final Dialog dialog = new AlertDialog.Builder(this).setView(
+						new EditText(this)).create();
 				dialog.setCanceledOnTouchOutside(false);
 				dialog.show();
 
@@ -199,8 +229,11 @@ public class GosAirlinkChooseDeviceWorkWiFiActivity extends GosConfigModuleBaseA
 			break;
 
 		case R.id.imgWiFiList:
-			AlertDialog.Builder dia = new AlertDialog.Builder(GosAirlinkChooseDeviceWorkWiFiActivity.this);
-			View view = View.inflate(GosAirlinkChooseDeviceWorkWiFiActivity.this, R.layout.alert_gos_wifi_list, null);
+			AlertDialog.Builder dia = new AlertDialog.Builder(
+					GosAirlinkChooseDeviceWorkWiFiActivity.this);
+			View view = View.inflate(
+					GosAirlinkChooseDeviceWorkWiFiActivity.this,
+					R.layout.alert_gos_wifi_list, null);
 			ListView listview = (ListView) view.findViewById(R.id.wifi_list);
 			List<ScanResult> rsList = NetUtils.getCurrentWifiScanResult(this);
 			List<String> localList = new ArrayList<String>();
@@ -222,7 +255,8 @@ public class GosAirlinkChooseDeviceWorkWiFiActivity extends GosConfigModuleBaseA
 			listview.setAdapter(adapter);
 			listview.setOnItemClickListener(new OnItemClickListener() {
 				@Override
-				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				public void onItemClick(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
 					ScanResult sResult = wifiList.get(arg2);
 					String sSID = sResult.SSID;
 					etSSID.setText(sSID);
@@ -247,7 +281,29 @@ public class GosAirlinkChooseDeviceWorkWiFiActivity extends GosConfigModuleBaseA
 	}
 
 	private void toAirlinkReady() {
-		// TODO
+		// 需要记录所有配置过的wifi和密码
+
+		try {
+			String mypass = spf.getString("mypass", "");
+			if (TextUtils.isEmpty(mypass)) {
+				JSONObject mUserAndPass = new JSONObject();
+
+				mUserAndPass.put(workSSID, workSSIDPsw);
+				spf.edit().putString("mypass", mUserAndPass.toString())
+						.commit();
+			} else {
+				JSONObject obj = new JSONObject(mypass);
+
+				obj.put(workSSID, workSSIDPsw);
+
+				spf.edit().putString("mypass", obj.toString()).commit();
+
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		spf.edit().putString("workSSID", workSSID).commit();
 		spf.edit().putString("workSSIDPsw", workSSIDPsw).commit();
 
@@ -256,15 +312,11 @@ public class GosAirlinkChooseDeviceWorkWiFiActivity extends GosConfigModuleBaseA
 		finish();
 	}
 
-	// 检查当前使用的WiFi是否曾经用过
-	protected boolean checkworkSSIDUsed(String workSSID) {
-		if (spf.contains("workSSID")) {
-			if (spf.getString("workSSID", "").equals(workSSID)) {
-				return true;
-			}
-		}
-		return false;
-	}
+	/*
+	 * // 检查当前使用的WiFi是否曾经用过 protected boolean checkworkSSIDUsed(String workSSID)
+	 * { if (spf.contains("workSSID")) { if (spf.getString("workSSID",
+	 * "").equals(workSSID)) { return true; } } return false; }
+	 */
 
 	// 屏蔽掉返回键
 	@Override
@@ -314,8 +366,9 @@ public class GosAirlinkChooseDeviceWorkWiFiActivity extends GosConfigModuleBaseA
 			View view = convertView;
 			Holder holder;
 			if (view == null) {
-				view = LayoutInflater.from(GosAirlinkChooseDeviceWorkWiFiActivity.this)
-						.inflate(R.layout.item_gos_wifi_list, null);
+				view = LayoutInflater.from(
+						GosAirlinkChooseDeviceWorkWiFiActivity.this).inflate(
+						R.layout.item_gos_wifi_list, null);
 				holder = new Holder(view);
 				view.setTag(holder);
 			} else {

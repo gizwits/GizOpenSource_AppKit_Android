@@ -1,6 +1,7 @@
 package com.gizwits.opensource.appkit.CommonModule;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -14,8 +15,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.gizwits.opensource.appkit.R;
-
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Color;
@@ -24,20 +23,30 @@ import android.graphics.drawable.GradientDrawable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
+import com.gizwits.opensource.appkit.R;
+import com.gizwits.opensource.appkit.utils.AssetsUtils;
 
 public class GosDeploy {
 
 	static Context context;
 
-	static HashMap<String, Object> infoMap;
+	public static HashMap<String, Object> infoMap;
 
 	// 配置文件名称
 	private static final String fileName = "UIConfig.json";
 
+	// 输出json的路径
+	public static String fileOutName = null;
+
 	public GosDeploy(Context context) {
 		super();
 		GosDeploy.context = context;
-		this.readJSON();
+
+		fileOutName = (context.getFilesDir().getAbsolutePath() + fileName);
+		copyJson();
+		readJSON();
 	}
 
 	/*
@@ -103,6 +112,15 @@ public class GosDeploy {
 	/** The AddDeviceTitle Key */
 	private static final String AddDeviceTitle_Key = "addDeviceTitle";
 
+	/** The QQ Key */
+	private static final String QQ = "qq";
+
+	/** The Wechat Key */
+	private static final String Wechat = "wechat";
+
+	/** The AnonymousLogin Key */
+	private static final String AnonymousLogin = "anonymousLogin";
+
 	/** The StatusBarStyle Key */
 	// private static final String StatusBarStyle_Key = "statusBarStyle";
 
@@ -130,6 +148,33 @@ public class GosDeploy {
 	public static String setAppSecret() {
 
 		return infoMap.get(App_Secret_Key).toString();
+	}
+
+	/**
+	 * 用来判断是否需要打开QQ登录
+	 * 
+	 * @return boolean
+	 */
+	public static boolean setQQ() {
+		return (Boolean) infoMap.get(QQ);
+	}
+
+	/**
+	 * 用来判断是否需要打开Wechat登录
+	 * 
+	 * @return boolean
+	 */
+	public static boolean setWechat() {
+		return (Boolean) infoMap.get(Wechat);
+	}
+
+	/**
+	 * 用来判断是否需要打开匿名登录
+	 * 
+	 * @return boolean
+	 */
+	public static boolean setAnonymousLogin() {
+		return (Boolean) infoMap.get(AnonymousLogin);
 	}
 
 	/**
@@ -207,10 +252,20 @@ public class GosDeploy {
 	public static int setPushType() {
 		int pushType = 0;
 
-		int PushType_FromMap = Integer.parseInt(infoMap.get(Push_Type_Key).toString());
+		int PushType_FromMap = Integer.parseInt(infoMap.get(Push_Type_Key)
+				.toString());
 		if (PushType_FromMap == 1) {
+
+			Toast.makeText(
+					context,
+					context.getResources().getString(R.string.push_type_string),
+					1).show();
 			pushType = PushType_FromMap;
 		} else if (PushType_FromMap == 2) {
+			Toast.makeText(
+					context,
+					context.getResources().getString(R.string.push_type_string),
+					1).show();
 			pushType = PushType_FromMap;
 		}
 
@@ -302,26 +357,26 @@ public class GosDeploy {
 	 * 
 	 * @return
 	 */
-	public static ConcurrentHashMap<String, Object> setCloudService() {
+	public static ConcurrentHashMap<String, String> setCloudService() {
 		String[] apiURl, siteURL, pushUrl;
 		apiURl = setApiURL();
 		siteURL = setSiteURL();
 		pushUrl = setGDMSURL();
-		ConcurrentHashMap<String, Object> cloudServiceMap = new ConcurrentHashMap<String, Object>();
+		ConcurrentHashMap<String, String> cloudServiceMap = new ConcurrentHashMap<String, String>();
 
 		if (!TextUtils.isEmpty(apiURl[0])) {
 			cloudServiceMap.put("openAPIDomain", apiURl[0]);
-			cloudServiceMap.put("openAPIPort", Integer.parseInt(apiURl[1]));
+			cloudServiceMap.put("openAPIPort", apiURl[1]);
 		}
 
 		if (!TextUtils.isEmpty(siteURL[0])) {
 			cloudServiceMap.put("siteDomain", siteURL[0]);
-			cloudServiceMap.put("sitePort", Integer.parseInt(siteURL[1]));
+			cloudServiceMap.put("sitePort", siteURL[1]);
 		}
 
 		if (!TextUtils.isEmpty(pushUrl[0])) {
 			cloudServiceMap.put("pushDomain", pushUrl[0]);
-			cloudServiceMap.put("pushPort", Integer.parseInt(pushUrl[1]));
+			cloudServiceMap.put("pushPort", pushUrl[1]);
 		}
 
 		return cloudServiceMap;
@@ -354,7 +409,8 @@ public class GosDeploy {
 	 */
 	public static int setButtonTextColor() {
 		int buttonTextcolor = context.getResources().getColor(R.color.black);
-		String ButtonTextColor_FromMap = infoMap.get(ButtonTextColor_Key).toString();
+		String ButtonTextColor_FromMap = infoMap.get(ButtonTextColor_Key)
+				.toString();
 		if (!TextUtils.isEmpty(ButtonTextColor_FromMap)) {
 			buttonTextcolor = Color.parseColor("#" + ButtonTextColor_FromMap);
 		}
@@ -371,11 +427,14 @@ public class GosDeploy {
 		GradientDrawable drawable = new GradientDrawable();
 		drawable.setShape(GradientDrawable.RECTANGLE);
 
-		int navigationBarColor = context.getResources().getColor(R.color.yellow);
+		int navigationBarColor = context.getResources()
+				.getColor(R.color.yellow);
 
-		String NavigationBarColor_FromMap = infoMap.get(NavigationBarColor_Key).toString();
+		String NavigationBarColor_FromMap = infoMap.get(NavigationBarColor_Key)
+				.toString();
 		if (!TextUtils.isEmpty(NavigationBarColor_FromMap)) {
-			navigationBarColor = Color.parseColor("#" + NavigationBarColor_FromMap);
+			navigationBarColor = Color.parseColor("#"
+					+ NavigationBarColor_FromMap);
 		}
 		drawable.setColor(navigationBarColor);
 
@@ -388,10 +447,13 @@ public class GosDeploy {
 	 * @return
 	 */
 	public static int setNavigationBarTextColor() {
-		int navigationBarTextColor = context.getResources().getColor(R.color.black);
-		String NavigationBarTextColor_FromMap = infoMap.get(NavigationBarTextColor_Key).toString();
+		int navigationBarTextColor = context.getResources().getColor(
+				R.color.black);
+		String NavigationBarTextColor_FromMap = infoMap.get(
+				NavigationBarTextColor_Key).toString();
 		if (!TextUtils.isEmpty(NavigationBarTextColor_FromMap)) {
-			navigationBarTextColor = Color.parseColor("#" + NavigationBarTextColor_FromMap);
+			navigationBarTextColor = Color.parseColor("#"
+					+ NavigationBarTextColor_FromMap);
 		}
 		return navigationBarTextColor;
 	}
@@ -402,11 +464,14 @@ public class GosDeploy {
 	 * @return
 	 */
 	public static int setConfigProgressViewColor() {
-		int configProgressViewColor = context.getResources().getColor(R.color.black);
+		int configProgressViewColor = context.getResources().getColor(
+				R.color.black);
 
-		String ConfigProgressViewColor_FromMap = infoMap.get(ConfigProgressViewColor_Key).toString();
+		String ConfigProgressViewColor_FromMap = infoMap.get(
+				ConfigProgressViewColor_Key).toString();
 		if (!TextUtils.isEmpty(ConfigProgressViewColor_FromMap)) {
-			configProgressViewColor = Color.parseColor("#" + ConfigProgressViewColor_FromMap);
+			configProgressViewColor = Color.parseColor("#"
+					+ ConfigProgressViewColor_FromMap);
 		}
 
 		return configProgressViewColor;
@@ -418,24 +483,29 @@ public class GosDeploy {
 	 * @return
 	 */
 	public static String setAddDeviceTitle() {
-		String addDeviceTitle = "设备";
 
-		String AddDeviceTitle_FromMap = infoMap.get(AddDeviceTitle_Key).toString();
+		String addDeviceTitle = context.getResources().getString(
+				R.string.addDeviceTitle);
+		String AddDeviceTitle_FromMap = infoMap.get(AddDeviceTitle_Key)
+				.toString();
 		if (!TextUtils.isEmpty(AddDeviceTitle_FromMap)) {
 			addDeviceTitle = AddDeviceTitle_FromMap;
 		}
 
 		return addDeviceTitle;
+
 	}
 
 	/**
 	 * 读取本地的JSON文件
 	 */
 	private void readJSON() {
-		AssetManager assetManager = context.getAssets();
 		try {
-			InputStreamReader inputStreamReader = new InputStreamReader(assetManager.open(fileName), "UTF-8");
-			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+			FileInputStream input = new FileInputStream(fileOutName);
+			InputStreamReader inputStreamReader = new InputStreamReader(input,
+					"UTF-8");
+			BufferedReader bufferedReader = new BufferedReader(
+					inputStreamReader);
 			String line;
 			StringBuilder stringBuilder = new StringBuilder();
 			while ((line = bufferedReader.readLine()) != null) {
@@ -470,4 +540,13 @@ public class GosDeploy {
 
 	}
 
+	// 拷贝json文件
+	private void copyJson() {
+		try {
+			AssetsUtils.assetsDataToSD(fileOutName, fileName, context);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
 }

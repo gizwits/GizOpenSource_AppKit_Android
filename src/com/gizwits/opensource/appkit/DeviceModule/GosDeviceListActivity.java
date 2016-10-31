@@ -164,7 +164,7 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
 					GizWifiSDK.sharedInstance().getBoundDevices(uid, token, ProductKeyList);
 				}
 
-				if (loginStatus == 0) {
+				if (loginStatus == 0&&GosDeploy.setAnonymousLogin()) {
 					loginStatus = 3;
 					GizWifiSDK.sharedInstance().userLoginAnonymous();
 				}
@@ -172,7 +172,7 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
 				break;
 
 			case UPDATALIST:
-
+				
 				progressDialog.cancel();
 				UpdateUI();
 				break;
@@ -297,6 +297,9 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
 	@Override
 	protected void onResume() {
 		super.onResume();
+		
+		GosDeviceModuleBaseActivity.deviceslist=GizWifiSDK.sharedInstance().getDeviceList();
+		UpdateUI();
 		// TODO GosMessageHandler.getSingleInstance().SetHandler(handler);
 		if (boundMessage.size() != 0) {
 			progressDialog.show();
@@ -307,9 +310,6 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
 			} else {
 				Log.i("Apptest", "ListSize:" + boundMessage.size());
 			}
-		}else {
-			GosDeviceModuleBaseActivity.deviceslist=GizWifiSDK.sharedInstance().getDeviceList();
-			UpdateUI();
 		}
 
 	}
@@ -318,7 +318,7 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
 	public void onPause() {
 		super.onPause();
 		boundMessage.clear();
-		// TODO GosMessageHandler.getSingleInstance().SetHandler(null);
+		 GosMessageHandler.getSingleInstance().SetHandler(null);
 
 	}
 
@@ -430,7 +430,10 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
 			GosPushManager.pushBindService(token);
 		} else {
 			loginStatus = 0;
-			tryUserLoginAnonymous();
+			if(GosDeploy.setAnonymousLogin()){
+				tryUserLoginAnonymous();
+			}
+			
 		}
 	}
 

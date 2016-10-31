@@ -1,4 +1,4 @@
-{
+﻿{
     "app_id":"your_app_id",
     "app_secret":"your_app_secret",
     "product_key":[],   
@@ -16,5 +16,8 @@
     "navigationBarColor":"F8DC26",
     "navigationBarTextColor":"000000",
     "configProgressViewColor":"000000",
-    "addDeviceTitle":"设备"
+    "addDeviceTitle":"",
+    "qq": true,
+    "wechat": true,
+    "anonymousLogin": true
 }

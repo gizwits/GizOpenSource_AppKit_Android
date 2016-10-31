@@ -71,19 +71,26 @@ public class GosMessageHandler {
 				return;
 			}
 			newDeviceList.clear();
-			List<ScanResult> currentWifiScanResult = NetUtils.getCurrentWifiScanResult(mcContext);
+			List<ScanResult> currentWifiScanResult = NetUtils
+					.getCurrentWifiScanResult(mcContext);
 			int flog = 0;
-			for (ScanResult scanResult : currentWifiScanResult) {
-				String ssid = scanResult.SSID;
-				// 获取系统的NotificationManager服务
-				nm = (NotificationManager) mcContext.getSystemService(Context.NOTIFICATION_SERVICE);
-				if (ssid.contains(GosBaseActivity.SoftAP_Start) && ssid.length() > GosBaseActivity.SoftAP_Start.length()
-						&& !newDeviceList.toString().contains(ssid)) {
-					newDeviceList.add(ssid);
-					flog++;
-					send(ssid, flog);
+			if (currentWifiScanResult != null) {
+				for (ScanResult scanResult : currentWifiScanResult) {
+					String ssid = scanResult.SSID;
+					// 获取系统的NotificationManager服务
+					nm = (NotificationManager) mcContext
+							.getSystemService(Context.NOTIFICATION_SERVICE);
+					if (ssid.contains(GosBaseActivity.SoftAP_Start)
+							&& ssid.length() > GosBaseActivity.SoftAP_Start
+									.length()
+							&& !newDeviceList.toString().contains(ssid)) {
+						newDeviceList.add(ssid);
+						flog++;
+						send(ssid, flog);
+					}
 				}
 			}
+
 			if (mainHandler != null && newDeviceList.size() > 0) {
 				mainHandler.sendEmptyMessage(SHOWDIALOG);
 			}
@@ -100,7 +107,8 @@ public class GosMessageHandler {
 		title = (String) mcContext.getText(R.string.not_title);
 		text = (String) mcContext.getText(R.string.not_text);
 		// 创建一个启动其他Activity的Intent
-		Intent intent = new Intent(mcContext, GosCheckDeviceWorkWiFiActivity.class);
+		Intent intent = new Intent(mcContext,
+				GosCheckDeviceWorkWiFiActivity.class);
 		intent.putExtra("softssid", ssid);
 		PendingIntent pi = PendingIntent.getActivity(mcContext, 0, intent, 0);
 		Notification notify = new Notification();
@@ -113,7 +121,8 @@ public class GosMessageHandler {
 		notify.flags = Notification.FLAG_AUTO_CANCEL;
 
 		// 构造通知内容布局
-		RemoteViews rv = new RemoteViews(mcContext.getPackageName(), R.layout.view_gos_notification);
+		RemoteViews rv = new RemoteViews(mcContext.getPackageName(),
+				R.layout.view_gos_notification);
 		// 设置通知内容的标题
 		rv.setTextViewText(R.id.tvContentTitle, title);
 		// 设置通知内容

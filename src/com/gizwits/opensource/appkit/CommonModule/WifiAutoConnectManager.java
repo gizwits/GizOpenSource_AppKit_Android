@@ -13,7 +13,8 @@ import android.util.Log;
 
 public class WifiAutoConnectManager {
 
-	private static final String TAG = WifiAutoConnectManager.class.getSimpleName();
+	private static final String TAG = WifiAutoConnectManager.class
+			.getSimpleName();
 
 	WifiManager wifiManager;
 
@@ -35,7 +36,8 @@ public class WifiAutoConnectManager {
 
 	// 查看以前是否也配置过这个网络
 	private WifiConfiguration isExsits(String SSID) {
-		List<WifiConfiguration> existingConfigs = wifiManager.getConfiguredNetworks();
+		List<WifiConfiguration> existingConfigs = wifiManager
+				.getConfiguredNetworks();
 		for (WifiConfiguration existingConfig : existingConfigs) {
 			if (existingConfig.SSID.equals("\"" + SSID + "\"")) {
 				return existingConfig;
@@ -44,7 +46,8 @@ public class WifiAutoConnectManager {
 		return null;
 	}
 
-	private WifiConfiguration createWifiInfo(String SSID, String Password, WifiCipherType Type) {
+	private WifiConfiguration createWifiInfo(String SSID, String Password,
+			WifiCipherType Type) {
 		WifiConfiguration config = new WifiConfiguration();
 		config.allowedAuthAlgorithms.clear();
 		config.allowedGroupCiphers.clear();
@@ -52,6 +55,7 @@ public class WifiAutoConnectManager {
 		config.allowedPairwiseCiphers.clear();
 		config.allowedProtocols.clear();
 		config.SSID = "\"" + SSID + "\"";
+		// config.SSID = SSID;
 		// nopass
 		if (Type == WifiCipherType.WIFICIPHER_NOPASS) {
 			// config.wepKeys[0] = "";
@@ -76,14 +80,17 @@ public class WifiAutoConnectManager {
 		if (Type == WifiCipherType.WIFICIPHER_WPA) {
 			config.preSharedKey = "\"" + Password + "\"";
 			config.hiddenSSID = true;
-			config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+			config.allowedAuthAlgorithms
+					.set(WifiConfiguration.AuthAlgorithm.OPEN);
 			config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
 			config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-			config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+			config.allowedPairwiseCiphers
+					.set(WifiConfiguration.PairwiseCipher.TKIP);
 			// 此处需要修改否则不能自动重联
 			// config.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
 			config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-			config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+			config.allowedPairwiseCiphers
+					.set(WifiConfiguration.PairwiseCipher.CCMP);
 			config.status = WifiConfiguration.Status.ENABLED;
 
 		}
@@ -97,6 +104,13 @@ public class WifiAutoConnectManager {
 			bRet = wifiManager.setWifiEnabled(true);
 		}
 		return bRet;
+	}
+
+	// 关闭WIFI
+	private void closeWifi() {
+		if (wifiManager.isWifiEnabled()) {
+			wifiManager.setWifiEnabled(false);
+		}
 	}
 
 	class ConnectRunnable implements Runnable {
@@ -124,27 +138,33 @@ public class WifiAutoConnectManager {
 					Thread.sleep(100);
 
 				} catch (InterruptedException ie) {
+					Log.e(TAG, ie.toString());
 				}
-			}
-
-			WifiConfiguration wifiConfig = createWifiInfo(ssid, password, type);
-			//
-			if (wifiConfig == null) {
-				Log.d(TAG, "wifiConfig is null!");
-				return;
 			}
 
 			WifiConfiguration tempConfig = isExsits(ssid);
 
 			if (tempConfig != null) {
-				wifiManager.removeNetwork(tempConfig.networkId);
+				// wifiManager.removeNetwork(tempConfig.networkId);
+
+				boolean b = wifiManager.enableNetwork(tempConfig.networkId,
+						true);
+			} else {
+				WifiConfiguration wifiConfig = createWifiInfo(ssid, password,
+						type);
+				//
+				if (wifiConfig == null) {
+					Log.d(TAG, "wifiConfig is null!");
+					return;
+				}
+
+				int netID = wifiManager.addNetwork(wifiConfig);
+				boolean enabled = wifiManager.enableNetwork(netID, true);
+				Log.d(TAG, "enableNetwork status enable=" + enabled);
+				boolean connected = wifiManager.reconnect();
+				Log.d(TAG, "enableNetwork connected=" + connected);
 			}
 
-			int netID = wifiManager.addNetwork(wifiConfig);
-			boolean enabled = wifiManager.enableNetwork(netID, true);
-			Log.d(TAG, "enableNetwork status enable=" + enabled);
-			boolean connected = wifiManager.reconnect();
-			Log.d(TAG, "enableNetwork connected=" + connected);
 		}
 	}
 
@@ -162,7 +182,8 @@ public class WifiAutoConnectManager {
 	private static boolean isHex(String key) {
 		for (int i = key.length() - 1; i >= 0; i--) {
 			final char c = key.charAt(i);
-			if (!(c >= '0' && c <= '9' || c >= 'A' && c <= 'F' || c >= 'a' && c <= 'f')) {
+			if (!(c >= '0' && c <= '9' || c >= 'A' && c <= 'F' || c >= 'a'
+					&& c <= 'f')) {
 				return false;
 			}
 		}
@@ -173,7 +194,8 @@ public class WifiAutoConnectManager {
 	// 获取ssid的加密方式
 
 	public static WifiCipherType getCipherType(Context context, String ssid) {
-		WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+		WifiManager wifiManager = (WifiManager) context
+				.getSystemService(Context.WIFI_SERVICE);
 
 		List<ScanResult> list = wifiManager.getScanResults();
 
@@ -185,10 +207,12 @@ public class WifiAutoConnectManager {
 
 				if (!TextUtils.isEmpty(capabilities)) {
 
-					if (capabilities.contains("WPA") || capabilities.contains("wpa")) {
+					if (capabilities.contains("WPA")
+							|| capabilities.contains("wpa")) {
 						Log.i("hefeng", "wpa");
 						return WifiCipherType.WIFICIPHER_WPA;
-					} else if (capabilities.contains("WEP") || capabilities.contains("wep")) {
+					} else if (capabilities.contains("WEP")
+							|| capabilities.contains("wep")) {
 						Log.i("hefeng", "wep");
 						return WifiCipherType.WIFICIPHER_WEP;
 					} else {
