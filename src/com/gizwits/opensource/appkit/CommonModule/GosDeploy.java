@@ -86,13 +86,13 @@ public class GosDeploy {
 	private static final String Bpush_App_Key = "bpush_app_key";
 
 	/** The API_URL Key */
-	private static final String API_URL_Key = "openAPIDomain";
+	private static final String API_URL_Key = "openAPI_URL";
 
 	/** The Site_URL Key */
-	private static final String SITE_URL_Key = "siteDomain";
+	private static final String SITE_URL_Key = "site_URL";
 
 	/** The GDMS_URL Key */
-	private static final String GDMS_URL_Key = "pushDomain";
+	private static final String GDMS_URL_Key = "push_URL";
 
 	/** The ButtonColor Key */
 	private static final String ButtonColor_Key = "buttonColor";
@@ -549,4 +549,4 @@ public class GosDeploy {
 		}
 
 	}
-}
+}	

@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.gizwits.opensource.appkit.R;
-import com.gizwits.opensource.appkit.utils.NetUtils;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.wifi.ScanResult;
@@ -16,13 +13,16 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.gizwits.opensource.appkit.R;
+import com.gizwits.opensource.appkit.CommonModule.GosConstant;
 
 @SuppressLint({ "InflateParams", "HandlerLeak" })
 public class GosChooseDeviceActivity extends GosConfigModuleBaseActivity implements OnClickListener {
@@ -93,7 +93,8 @@ public class GosChooseDeviceActivity extends GosConfigModuleBaseActivity impleme
 
 	private void initData() {
 		list = new ArrayList<ScanResult>();
-		list = (ArrayList<ScanResult>) NetUtils.getCurrentWifiScanResult(GosChooseDeviceActivity.this);
+		list = (ArrayList<ScanResult>) GosConstant.ssidList;
+		//list = (ArrayList<ScanResult>) NetUtils.getCurrentWifiScanResult(GosChooseDeviceActivity.this);
 		softList = new ArrayList<ScanResult>();
 		ScanResult scanResult;
 		for (int i = 0; i < list.size(); i++) {

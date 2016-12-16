@@ -54,6 +54,11 @@ public class GosBaseActivity extends Activity {
 
 	/** 实现WXEntryActivity与GosUserLoginActivity共用 */
 	public static Handler baseHandler;
+	
+	
+	public static boolean isclean = false;
+	
+	
 
 	public void setBaseHandler(Handler basehandler) {
 		if (null != basehandler) {
@@ -73,7 +78,7 @@ public class GosBaseActivity extends Activity {
 		}
 
 		spf = getSharedPreferences(SPF_Name, Context.MODE_PRIVATE);
-		MessageCenter.getInstance(getApplicationContext());
+		MessageCenter.getInstance(this);
 		// 初始化
 		setProgressDialog();
 	}
