@@ -1,7 +1,7 @@
 # 机智云物联网开源框架App
 ================
 
-此为Android Studio版本。Eclipse版本下载地址：https://github.com/gizwits/GizOpenSource_AppKit_Android
+此为Eclipse版本。Android Studio版本下载地址：https://github.com/gizwits/GOpenSource_AppKit_Android_AS
 
 # 介绍
 
