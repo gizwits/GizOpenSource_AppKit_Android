@@ -14,7 +14,7 @@
 
 # GizWifiSDK 版本号
 
-    2.04.04
+    2.02.02
 
 # 功能介绍
 
@@ -110,7 +110,7 @@
 
 ## 5. 配置文件说明
 
-    配置文件位置：assets/UIConfig.json
+    配置文件位置：GOpenSourceModules/CommonModule/UIConfig.json
 
     配置文件可对程序样式及机智云appid等进行配置。
 
@@ -125,24 +125,16 @@
 	wechat_app_secret：微信登录 app secret
 	push_type：推送类型 【0：关闭，1：极光，2：百度】
 	bpush_app_key：百度推送 app key
-	openAPIDomain：openAPI 域名及端口，格式：api.gizwits.com”。要指定端口，格式为：”xxx.xxxxxxx.com:81&8443”
-	siteDomain：site 域名及端口，格式：“site.gizwits.com”。要指定端口，格式为：”xxx.xxxxxxx.com:81&8443”
-	pushDomain：推送绑定服务器 域名及端口，格式：“push.gizwits.com”。要指定端口，格式为：”xxx.xxxxxxx.com:81&8443”
+	openAPI_URL：openAPI 域名及端口，格式：“api.gizwits.com:80”，不写端口默认80
+	site_URL：site 域名及端口，格式：“site.gizwits.com:80”，不写端口默认80
+	push_URL：推送绑定服务器 域名及端口，格式：“push.gizwits.com:80”，不写端口默认80
 	buttonColor：按钮颜色
 	buttonTextColor：按钮文字颜色
 	navigationBarColor：导航栏颜色
 	navigationBarTextColor：导航栏文字颜色
 	configProgressViewColor：配置中界面 progress view 颜色
 	addDeviceTitle：添加设备界面 导航栏标题文字
-	qq：是否打开QQ登录【true：打开】
-    wechat：是否打开微信登录【true：打开】
-    anonymousLogin：是否打开匿名登录【true：打开】
-    
-              需要注意:
-              1.极光推送的appid需要在AndroidManifest.xml 中填写见243行。
-              2.微信登录需要进行在腾讯api中设置自己的md5值否者无法正常运行
-              3.tencent_app_id需要在AndroidManifest.xml中89行填写
-    
+
     具体细节可以参考【开源框架工程使用文档】：http://docs.gizwits.com/hc/kb/article/186638/
 
 # GoKit硬件依赖
