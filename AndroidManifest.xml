@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gizwits.opensource.appkit"
     android:versionCode="1"
-    android:versionName="2.4.0.120912" >
+    android:versionName="2.5.0.022212" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -131,6 +131,17 @@
         <activity android:name=".ConfigModule.GosAirlinkConfigCountdownActivity" >
         </activity>
         <activity android:name=".UserModule.GosUserManager"></activity>
+        <activity android:name="com.gizwits.opensource.appkit.sharingdevice.SharedDeviceListAcitivity"></activity>
+
+        <activity android:name="com.gizwits.opensource.appkit.sharingdevice.SharedDeviceManagerActivity"></activity>
+        
+        <activity android:name="com.gizwits.opensource.appkit.sharingdevice.addSharedActivity"></activity>
+        <activity android:name="com.gizwits.opensource.appkit.sharingdevice.twoSharedActivity"></activity>
+        <activity android:name="com.gizwits.opensource.appkit.sharingdevice.userSharedActivity"></activity>
+        <activity android:name="com.gizwits.opensource.appkit.DeviceModule.GosMainActivity"></activity>
+        <activity android:name="com.gizwits.opensource.appkit.sharingdevice.messageCenterActivity"></activity>
+        <activity android:name="com.gizwits.opensource.appkit.sharingdevice.deviceSharedMessageActivity"></activity>
+        <activity android:name="com.gizwits.opensource.appkit.sharingdevice.gosZxingDeviceSharingActivity"></activity>
 
         <!-- 极光推送 -->
         <!-- Required SDK 核心功能 -->
