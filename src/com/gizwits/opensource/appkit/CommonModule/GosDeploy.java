@@ -223,7 +223,7 @@ public class GosDeploy {
 	 * @return
 	 */
 	public static int setUsingTabSetOn() {
-		int modeOnOff = View.INVISIBLE;
+		int modeOnOff = View.GONE;
 
 		String moduleSelectOn = infoMap.get(UsingTabSet).toString();
 		if (Boolean.parseBoolean(moduleSelectOn)) {
