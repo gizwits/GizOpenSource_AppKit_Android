@@ -142,6 +142,7 @@
 	qq：是否打开QQ登录【true：打开】
     wechat：是否打开微信登录【true：打开】
     anonymousLogin：是否打开匿名登录【true：打开】
+    UsingTabSet：用于使用或不使用Tab标签页 【true：打开】
     
               需要注意:
               1.极光推送的appid需要在AndroidManifest.xml 中填写见243行。
