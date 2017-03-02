@@ -215,8 +215,7 @@ public class GosDeploy {
 
 		return modeOnOff;
 	}
-	
-	
+
 	/**
 	 * 设置模组类型开关
 	 * 
@@ -528,8 +527,15 @@ public class GosDeploy {
 			Iterator actions = root.keys();
 			while (actions.hasNext()) {
 				String param = actions.next().toString();
-				Object value = root.get(param);
-				infoMap.put(param, value);
+
+				if (param.equals("product_key")) {
+					JSONArray myarray = (JSONArray) root.get(param);
+					infoMap.put(param, myarray);
+				} else {
+					Object value = root.get(param);
+					infoMap.put(param, value);
+				}
+
 			}
 
 		} catch (JSONException e) {
